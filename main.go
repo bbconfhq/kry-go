@@ -3,6 +3,7 @@ package main
 import (
 	"kry-go/config"
 	"kry-go/server"
+	"kry-go/server/routes"
 	"kry-go/utils"
 	"log"
 )
