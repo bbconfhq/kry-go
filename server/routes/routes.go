@@ -13,10 +13,14 @@ func InitRouter(server *server.Server) {
 	tagHandler := handlers.MakeTagHandler(server)
 	testcaseHandler := handlers.MakeTestcaseHandler(server)
 	userHandler := handlers.MakeUserHandler(server)
+	loginHandler := handlers.MakeLoginHandler(server)
 
 	server.Echo.Use(middleware.Logger())
 
 	g := server.Echo.Group("/api")
+
+	g.GET("/login/github", loginHandler.LoginGithub)
+	g.GET("/login/github/callback", loginHandler.LoginGithubCallback)
 
 	// TODO: 어떤 URL에 어떤 Resource를 제공할 것인가
 	g.GET("/contest/:contestId", contestHandler.GetContest)

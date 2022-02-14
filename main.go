@@ -15,7 +15,7 @@ func main() {
 	routes.InitRouter(app)
 	utils.MigrateDatabase(app.DB)
 
-	if err := app.Run(":8080"); err != nil {
+	if err := app.Run(":8000"); err != nil {
 		log.Fatal(err)
 	}
 }
