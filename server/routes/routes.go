@@ -1,9 +1,12 @@
 package routes
 
 import (
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4/middleware"
 	"kry-go/server"
 	"kry-go/server/handlers"
+	"os"
 )
 
 func InitRouter(server *server.Server) {
@@ -15,14 +18,17 @@ func InitRouter(server *server.Server) {
 	userHandler := handlers.MakeUserHandler(server)
 	loginHandler := handlers.MakeLoginHandler(server)
 
+	// TODO: Consider using redis-session
+	sessionSecret := os.Getenv("SESSION_SECRET")
+	server.Echo.Use(session.Middleware(sessions.NewCookieStore([]byte(sessionSecret))))
 	server.Echo.Use(middleware.Logger())
 
 	g := server.Echo.Group("/api")
 
-	g.GET("/login/github", loginHandler.LoginGithub)
-	g.GET("/login/github/callback", loginHandler.LoginGithubCallback)
+	g.GET("/login/:loginType", loginHandler.LoginUser)
+	g.POST("/login/:loginType/callback", loginHandler.LoginNewUser)
 
-	// TODO: 어떤 URL에 어떤 Resource를 제공할 것인가
+	// TODO: Define resources in URLs
 	g.GET("/contest/:contestId", contestHandler.GetContest)
 	g.GET("/problem/:problemId", problemHandler.GetProblem)
 	g.GET("/submission/:problemId", submissionHandler.GetSubmission)
