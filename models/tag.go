@@ -20,5 +20,4 @@ type Tag struct {
 	Name      string `gorm:"type:varchar(191);unique;not null"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	ProblemID uint
 }

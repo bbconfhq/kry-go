@@ -1,0 +1,237 @@
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  models.Contest:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      endedAt:
+        type: string
+      id:
+        type: integer
+      problems:
+        items:
+          $ref: '#/definitions/models.Problem'
+        type: array
+      startedAt:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.Problem:
+    properties:
+      acceptCount:
+        type: integer
+      content:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      memoryLimit:
+        type: integer
+      note:
+        type: string
+      submitCount:
+        type: integer
+      tags:
+        items:
+          $ref: '#/definitions/models.Tag'
+        type: array
+      testcases:
+        items:
+          $ref: '#/definitions/models.Testcase'
+        type: array
+      timeLimit:
+        type: number
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.Tag:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  models.Testcase:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      input:
+        type: string
+      output:
+        type: string
+      problemID:
+        type: integer
+      updatedAt:
+        type: string
+      visible:
+        type: boolean
+    type: object
+info:
+  contact:
+    email: gwanryo@gmail.com
+    name: Ryo
+    url: https://github.com/gwanryo/kry-go
+  description: kry(Kim-gi-dong, Ryo, Yun) is simple problem-solving contest server
+    written in Go.
+  license:
+    name: MIT
+  termsOfService: http://swagger.io/terms/
+  title: kry-go
+  version: "0.1"
+paths:
+  /contest:
+    get:
+      consumes:
+      - application/json
+      description: Get contests
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Contest'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            type: int
+      summary: Get contests
+      tags:
+      - contest
+    post:
+      consumes:
+      - application/json
+      description: Register contest
+      parameters:
+      - description: string
+        in: query
+        name: contest
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: int
+        "500":
+          description: Internal Server Error
+          schema:
+            type: int
+      summary: Post contest
+      tags:
+      - contest
+  /contest/:contestId:
+    delete:
+      consumes:
+      - application/json
+      description: Delete contest detail
+      parameters:
+      - description: int valid
+        in: path
+        name: contest_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: int
+        "404":
+          description: Not Found
+          schema:
+            type: int
+        "500":
+          description: Internal Server Error
+          schema:
+            type: int
+      summary: Delete contest detail
+      tags:
+      - contest
+    get:
+      consumes:
+      - application/json
+      description: Get contest detail
+      parameters:
+      - description: int valid
+        in: path
+        name: contest_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Contest'
+        "500":
+          description: Internal Server Error
+          schema:
+            type: int
+      summary: Get contest detail
+      tags:
+      - contest
+    put:
+      consumes:
+      - application/json
+      description: Edit contest detail
+      parameters:
+      - description: int valid
+        in: path
+        name: contest_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+          schema:
+            type: int
+        "404":
+          description: Not Found
+          schema:
+            type: int
+        "500":
+          description: Internal Server Error
+          schema:
+            type: int
+      summary: Put contest detail
+      tags:
+      - contest
+swagger: "2.0"

@@ -2,6 +2,9 @@ package requests
 
 type (
 	UserRequest struct {
-		Username string `json:"username" validate:"required"`
+		ID       uint   `json:"id" validate:"required"`
+		Username string `json:"login" validate:"required"`
+		Email    string `json:"email" validate:"email"`
+		Bio      string `json:"bio"`
 	}
 )

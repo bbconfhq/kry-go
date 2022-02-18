@@ -42,5 +42,5 @@ type Problem struct {
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	Testcases   []Testcase
-	Tags        []Tag `gorm:"many2many:problem_tags"`
+	Tags        []Tag `gorm:"many2many:problem_tags;"`
 }
