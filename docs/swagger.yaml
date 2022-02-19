@@ -1,4 +1,8 @@
 definitions:
+  echo.HTTPError:
+    properties:
+      message: {}
+    type: object
   gorm.DeletedAt:
     properties:
       time:
@@ -95,6 +99,27 @@ definitions:
       visible:
         type: boolean
     type: object
+  responses.ContestResponse:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      endedAt:
+        type: string
+      id:
+        type: integer
+      problemIds:
+        items:
+          type: integer
+        type: array
+      startedAt:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
 info:
   contact:
     email: gwanryo@gmail.com
@@ -113,6 +138,14 @@ paths:
       consumes:
       - application/json
       description: Get contests
+      parameters:
+      - default: 1
+        description: Page of contests
+        in: query
+        minimum: 1
+        name: page
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
@@ -120,12 +153,16 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Contest'
+              $ref: '#/definitions/responses.ContestResponse'
             type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
         "500":
           description: Internal Server Error
           schema:
-            type: int
+            $ref: '#/definitions/echo.HTTPError'
       summary: Get contests
       tags:
       - contest
@@ -142,14 +179,12 @@ paths:
       produces:
       - application/json
       responses:
-        "204":
-          description: No Content
-          schema:
-            type: int
+        "201":
+          description: Created
         "500":
           description: Internal Server Error
           schema:
-            type: int
+            $ref: '#/definitions/echo.HTTPError'
       summary: Post contest
       tags:
       - contest

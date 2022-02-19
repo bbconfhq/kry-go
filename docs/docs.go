@@ -37,20 +37,37 @@ const docTemplate_swagger = `{
                     "contest"
                 ],
                 "summary": "Get contests",
+                "parameters": [
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page of contests",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Contest"
+                                "$ref": "#/definitions/responses.ContestResponse"
                             }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "int"
+                            "$ref": "#/definitions/echo.HTTPError"
                         }
                     }
                 }
@@ -77,16 +94,13 @@ const docTemplate_swagger = `{
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content",
-                        "schema": {
-                            "type": "int"
-                        }
+                    "201": {
+                        "description": "Created"
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "int"
+                            "$ref": "#/definitions/echo.HTTPError"
                         }
                     }
                 }
@@ -216,6 +230,12 @@ const docTemplate_swagger = `{
         }
     },
     "definitions": {
+        "echo.HTTPError": {
+            "type": "object",
+            "properties": {
+                "message": {}
+            }
+        },
         "gorm.DeletedAt": {
             "type": "object",
             "properties": {
@@ -359,6 +379,38 @@ const docTemplate_swagger = `{
                 },
                 "visible": {
                     "type": "boolean"
+                }
+            }
+        },
+        "responses.ContestResponse": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "endedAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "problemIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "startedAt": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
                 }
             }
         }

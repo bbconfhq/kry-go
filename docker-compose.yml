@@ -10,11 +10,11 @@ services:
 #    command: ["wait-for", "db:3306", "--", "air"]
 #    depends_on:
 #      - db
-#      - redis
+##      - redis
   db:
     image: mariadb:focal
     environment:
       - MYSQL_ROOT_PASSWORD=bjbest
       - MYSQL_DATABASE=kry
     ports:
-      - 3306:3306
+      - "3306:3306"

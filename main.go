@@ -8,21 +8,22 @@ import (
 	"log"
 )
 
-// @title kry-go
-// @version 0.1
-// @description kry(Kim-gi-dong, Ryo, Yun) is simple problem-solving contest server written in Go.
-// @termsOfService http://swagger.io/terms/
+// swag init --parseDependency --parseInternal
 
-// @contact.name Ryo
-// @contact.url https://github.com/gwanryo/kry-go
-// @contact.email gwanryo@gmail.com
+// @title           kry-go
+// @version         0.1
+// @description     kry(Kim-gi-dong, Ryo, Yun) is simple problem-solving contest server written in Go.
+// @termsOfService  http://swagger.io/terms/
 
-// @license.name MIT
+// @contact.name   Ryo
+// @contact.url    https://github.com/gwanryo/kry-go
+// @contact.email  gwanryo@gmail.com
+
+// @license.name  MIT
 // @license.url
 
 // @host
 // @BasePath
-// swag init --parseDependency --parseInternal
 func main() {
 	cfg := config.Load()
 	app := server.Init(cfg)

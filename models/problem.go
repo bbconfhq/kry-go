@@ -37,8 +37,8 @@ type Problem struct {
 	Note        string  `gorm:"type:text;not null"`
 	TimeLimit   float64 `gorm:"type:decimal(7,5);not null"`
 	MemoryLimit uint    `gorm:"not null"`
-	SubmitCount uint    `gorm:"not null"`
-	AcceptCount uint    `gorm:"not null"`
+	SubmitCount uint    `gorm:"default:0;not null"`
+	AcceptCount uint    `gorm:"default:0;not null"`
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
 	Testcases   []Testcase
