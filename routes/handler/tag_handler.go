@@ -2,8 +2,8 @@ package handler
 
 import (
 	"github.com/labstack/echo/v4"
+	"kry-go/model/service"
 	"kry-go/server"
-	"kry-go/service"
 	"net/http"
 )
 
