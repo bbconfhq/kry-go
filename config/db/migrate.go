@@ -2,7 +2,7 @@ package db
 
 import (
 	"gorm.io/gorm"
-	"kry-go/entity"
+	"kry-go/model/entity"
 )
 
 func MigrateDatabase(db *gorm.DB) {
