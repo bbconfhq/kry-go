@@ -17,7 +17,8 @@ const docTemplate_swagger = `{
             "email": "gwanryo@gmail.com"
         },
         "license": {
-            "name": "MIT"
+            "name": "MIT",
+            "url": "https://github.com/gwanryo/kry-go/blob/main/LICENSE"
         },
         "version": "{{.Version}}"
     },
@@ -41,7 +42,6 @@ const docTemplate_swagger = `{
                     {
                         "minimum": 1,
                         "type": "integer",
-                        "default": 1,
                         "description": "Page of contests",
                         "name": "page",
                         "in": "query",
@@ -54,7 +54,7 @@ const docTemplate_swagger = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/responses.ContestResponse"
+                                "$ref": "#/definitions/response.ContestResponse"
                             }
                         }
                     },
@@ -86,16 +86,24 @@ const docTemplate_swagger = `{
                 "summary": "Post contest",
                 "parameters": [
                     {
-                        "type": "string",
-                        "description": "string",
+                        "description": "Necessary contest information",
                         "name": "contest",
-                        "in": "query",
-                        "required": true
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ContestRequest"
+                        }
                     }
                 ],
                 "responses": {
                     "201": {
                         "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
                     },
                     "500": {
                         "description": "Internal Server Error",
@@ -122,7 +130,7 @@ const docTemplate_swagger = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "int valid",
+                        "description": "Contest ID",
                         "name": "contest_id",
                         "in": "path",
                         "required": true
@@ -132,13 +140,19 @@ const docTemplate_swagger = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Contest"
+                            "$ref": "#/definitions/response.ContestResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "int"
+                            "$ref": "#/definitions/echo.HTTPError"
                         }
                     }
                 }
@@ -157,30 +171,29 @@ const docTemplate_swagger = `{
                 "summary": "Put contest detail",
                 "parameters": [
                     {
-                        "type": "integer",
-                        "description": "int valid",
-                        "name": "contest_id",
-                        "in": "path",
-                        "required": true
+                        "description": "Necessary contest information",
+                        "name": "contest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ContestRequest"
+                        }
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No Content",
-                        "schema": {
-                            "type": "int"
-                        }
+                    "201": {
+                        "description": "Created"
                     },
-                    "404": {
-                        "description": "Not Found",
+                    "400": {
+                        "description": "Bad Request",
                         "schema": {
-                            "type": "int"
+                            "$ref": "#/definitions/echo.HTTPError"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "int"
+                            "$ref": "#/definitions/echo.HTTPError"
                         }
                     }
                 }
@@ -200,7 +213,7 @@ const docTemplate_swagger = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "int valid",
+                        "description": "Contest ID",
                         "name": "contest_id",
                         "in": "path",
                         "required": true
@@ -208,21 +221,18 @@ const docTemplate_swagger = `{
                 ],
                 "responses": {
                     "204": {
-                        "description": "No Content",
-                        "schema": {
-                            "type": "int"
-                        }
+                        "description": "No Content"
                     },
-                    "404": {
-                        "description": "Not Found",
+                    "400": {
+                        "description": "Bad Request",
                         "schema": {
-                            "type": "int"
+                            "$ref": "#/definitions/echo.HTTPError"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "int"
+                            "$ref": "#/definitions/echo.HTTPError"
                         }
                     }
                 }
@@ -236,159 +246,43 @@ const docTemplate_swagger = `{
                 "message": {}
             }
         },
-        "gorm.DeletedAt": {
+        "request.ContestRequest": {
+            "description": "Necessary contest information when request",
             "type": "object",
-            "properties": {
-                "time": {
-                    "type": "string"
-                },
-                "valid": {
-                    "description": "Valid is true if Time is not NULL",
-                    "type": "boolean"
-                }
-            }
-        },
-        "models.Contest": {
-            "type": "object",
+            "required": [
+                "content",
+                "ended_at",
+                "problem_ids",
+                "started_at",
+                "title"
+            ],
             "properties": {
                 "content": {
+                    "type": "string",
+                    "maxLength": 191
+                },
+                "ended_at": {
                     "type": "string"
                 },
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "$ref": "#/definitions/gorm.DeletedAt"
-                },
-                "endedAt": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "problems": {
+                "problem_ids": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/models.Problem"
+                        "type": "integer"
                     }
                 },
-                "startedAt": {
+                "started_at": {
                     "type": "string"
                 },
                 "title": {
                     "type": "string"
-                },
-                "updatedAt": {
-                    "type": "string"
                 }
             }
         },
-        "models.Problem": {
-            "type": "object",
-            "properties": {
-                "acceptCount": {
-                    "type": "integer"
-                },
-                "content": {
-                    "type": "string"
-                },
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "$ref": "#/definitions/gorm.DeletedAt"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "memoryLimit": {
-                    "type": "integer"
-                },
-                "note": {
-                    "type": "string"
-                },
-                "submitCount": {
-                    "type": "integer"
-                },
-                "tags": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Tag"
-                    }
-                },
-                "testcases": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/models.Testcase"
-                    }
-                },
-                "timeLimit": {
-                    "type": "number"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.Tag": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "$ref": "#/definitions/gorm.DeletedAt"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "type": "string"
-                }
-            }
-        },
-        "models.Testcase": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "deletedAt": {
-                    "$ref": "#/definitions/gorm.DeletedAt"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "input": {
-                    "type": "string"
-                },
-                "output": {
-                    "type": "string"
-                },
-                "problemID": {
-                    "type": "integer"
-                },
-                "updatedAt": {
-                    "type": "string"
-                },
-                "visible": {
-                    "type": "boolean"
-                }
-            }
-        },
-        "responses.ContestResponse": {
+        "response.ContestResponse": {
+            "description": "Contest information server responses",
             "type": "object",
             "properties": {
                 "content": {
-                    "type": "string"
-                },
-                "createdAt": {
                     "type": "string"
                 },
                 "endedAt": {
@@ -407,9 +301,6 @@ const docTemplate_swagger = `{
                     "type": "string"
                 },
                 "title": {
-                    "type": "string"
-                },
-                "updatedAt": {
                     "type": "string"
                 }
             }

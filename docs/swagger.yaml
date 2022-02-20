@@ -3,107 +3,33 @@ definitions:
     properties:
       message: {}
     type: object
-  gorm.DeletedAt:
-    properties:
-      time:
-        type: string
-      valid:
-        description: Valid is true if Time is not NULL
-        type: boolean
-    type: object
-  models.Contest:
+  request.ContestRequest:
+    description: Necessary contest information when request
     properties:
       content:
+        maxLength: 191
         type: string
-      createdAt:
+      ended_at:
         type: string
-      deletedAt:
-        $ref: '#/definitions/gorm.DeletedAt'
-      endedAt:
-        type: string
-      id:
-        type: integer
-      problems:
+      problem_ids:
         items:
-          $ref: '#/definitions/models.Problem'
+          type: integer
         type: array
-      startedAt:
+      started_at:
         type: string
       title:
         type: string
-      updatedAt:
-        type: string
+    required:
+    - content
+    - ended_at
+    - problem_ids
+    - started_at
+    - title
     type: object
-  models.Problem:
-    properties:
-      acceptCount:
-        type: integer
-      content:
-        type: string
-      createdAt:
-        type: string
-      deletedAt:
-        $ref: '#/definitions/gorm.DeletedAt'
-      id:
-        type: integer
-      memoryLimit:
-        type: integer
-      note:
-        type: string
-      submitCount:
-        type: integer
-      tags:
-        items:
-          $ref: '#/definitions/models.Tag'
-        type: array
-      testcases:
-        items:
-          $ref: '#/definitions/models.Testcase'
-        type: array
-      timeLimit:
-        type: number
-      title:
-        type: string
-      updatedAt:
-        type: string
-    type: object
-  models.Tag:
-    properties:
-      createdAt:
-        type: string
-      deletedAt:
-        $ref: '#/definitions/gorm.DeletedAt'
-      id:
-        type: integer
-      name:
-        type: string
-      updatedAt:
-        type: string
-    type: object
-  models.Testcase:
-    properties:
-      createdAt:
-        type: string
-      deletedAt:
-        $ref: '#/definitions/gorm.DeletedAt'
-      id:
-        type: integer
-      input:
-        type: string
-      output:
-        type: string
-      problemID:
-        type: integer
-      updatedAt:
-        type: string
-      visible:
-        type: boolean
-    type: object
-  responses.ContestResponse:
+  response.ContestResponse:
+    description: Contest information server responses
     properties:
       content:
-        type: string
-      createdAt:
         type: string
       endedAt:
         type: string
@@ -117,8 +43,6 @@ definitions:
         type: string
       title:
         type: string
-      updatedAt:
-        type: string
     type: object
 info:
   contact:
@@ -129,6 +53,7 @@ info:
     written in Go.
   license:
     name: MIT
+    url: https://github.com/gwanryo/kry-go/blob/main/LICENSE
   termsOfService: http://swagger.io/terms/
   title: kry-go
   version: "0.1"
@@ -139,8 +64,7 @@ paths:
       - application/json
       description: Get contests
       parameters:
-      - default: 1
-        description: Page of contests
+      - description: Page of contests
         in: query
         minimum: 1
         name: page
@@ -153,7 +77,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/responses.ContestResponse'
+              $ref: '#/definitions/response.ContestResponse'
             type: array
         "400":
           description: Bad Request
@@ -171,16 +95,21 @@ paths:
       - application/json
       description: Register contest
       parameters:
-      - description: string
-        in: query
+      - description: Necessary contest information
+        in: body
         name: contest
         required: true
-        type: string
+        schema:
+          $ref: '#/definitions/request.ContestRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
         "500":
           description: Internal Server Error
           schema:
@@ -194,7 +123,7 @@ paths:
       - application/json
       description: Delete contest detail
       parameters:
-      - description: int valid
+      - description: Contest ID
         in: path
         name: contest_id
         required: true
@@ -204,16 +133,14 @@ paths:
       responses:
         "204":
           description: No Content
+        "400":
+          description: Bad Request
           schema:
-            type: int
-        "404":
-          description: Not Found
-          schema:
-            type: int
+            $ref: '#/definitions/echo.HTTPError'
         "500":
           description: Internal Server Error
           schema:
-            type: int
+            $ref: '#/definitions/echo.HTTPError'
       summary: Delete contest detail
       tags:
       - contest
@@ -222,7 +149,7 @@ paths:
       - application/json
       description: Get contest detail
       parameters:
-      - description: int valid
+      - description: Contest ID
         in: path
         name: contest_id
         required: true
@@ -233,11 +160,15 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Contest'
+            $ref: '#/definitions/response.ContestResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
         "500":
           description: Internal Server Error
           schema:
-            type: int
+            $ref: '#/definitions/echo.HTTPError'
       summary: Get contest detail
       tags:
       - contest
@@ -246,26 +177,25 @@ paths:
       - application/json
       description: Edit contest detail
       parameters:
-      - description: int valid
-        in: path
-        name: contest_id
+      - description: Necessary contest information
+        in: body
+        name: contest
         required: true
-        type: integer
+        schema:
+          $ref: '#/definitions/request.ContestRequest'
       produces:
       - application/json
       responses:
-        "204":
-          description: No Content
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
           schema:
-            type: int
-        "404":
-          description: Not Found
-          schema:
-            type: int
+            $ref: '#/definitions/echo.HTTPError'
         "500":
           description: Internal Server Error
           schema:
-            type: int
+            $ref: '#/definitions/echo.HTTPError'
       summary: Put contest detail
       tags:
       - contest

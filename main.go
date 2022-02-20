@@ -2,9 +2,9 @@ package main
 
 import (
 	"kry-go/config"
+	"kry-go/config/db"
+	"kry-go/routes"
 	"kry-go/server"
-	"kry-go/server/routes"
-	"kry-go/utils"
 	"log"
 )
 
@@ -20,7 +20,7 @@ import (
 // @contact.email  gwanryo@gmail.com
 
 // @license.name  MIT
-// @license.url
+// @license.url   https://github.com/gwanryo/kry-go/blob/main/LICENSE
 
 // @host
 // @BasePath
@@ -29,7 +29,7 @@ func main() {
 	app := server.Init(cfg)
 
 	routes.InitRouter(app)
-	utils.MigrateDatabase(app.DB)
+	db.MigrateDatabase(app.DB)
 
 	if err := app.Run(":8000"); err != nil {
 		log.Fatal(err)

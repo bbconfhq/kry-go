@@ -6,7 +6,7 @@ import (
 )
 
 type Config struct {
-	DB DBConfig
+	DB DbConfig
 }
 
 func Load() *Config {
@@ -17,6 +17,6 @@ func Load() *Config {
 	}
 
 	return &Config{
-		DB: LoadDBConfig(),
+		DB: LoadDbConfig(),
 	}
 }

@@ -5,8 +5,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 	"kry-go/config"
-	"kry-go/db"
-	"kry-go/requests"
+	"kry-go/config/db"
+	"kry-go/utils"
 )
 
 type Server struct {
@@ -16,7 +16,7 @@ type Server struct {
 
 func Init(cfg *config.Config) *Server {
 	e := echo.New()
-	e.Validator = &requests.Validator{Validator: validator.New()}
+	e.Validator = &utils.Validator{Validator: validator.New()}
 	return &Server{
 		Echo: e,
 		DB:   db.Init(cfg),
