@@ -114,7 +114,7 @@ const docTemplate_swagger = `{
                 }
             }
         },
-        "/contest/:contestId": {
+        "/contest/{contest_id}": {
             "get": {
                 "description": "Get contest detail",
                 "consumes": [

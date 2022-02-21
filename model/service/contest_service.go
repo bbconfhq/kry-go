@@ -16,7 +16,7 @@ func (c *ContestService) SelectContestsAt(offset int, limit int) ([]response.Con
 	var contests []entity.Contest
 	var contestsResponse []response.ContestResponse
 
-	c.DB.
+	result := c.DB.
 		Preload("Problems", func(db *gorm.DB) *gorm.DB {
 			return db.Select("ID")
 		}).
@@ -25,6 +25,10 @@ func (c *ContestService) SelectContestsAt(offset int, limit int) ([]response.Con
 		Offset(offset).
 		Limit(limit).
 		Find(&contests)
+
+	if result.Error != nil {
+		return contestsResponse, result.Error
+	}
 
 	for _, e := range contests {
 		var problemIds []uint
@@ -53,7 +57,7 @@ func (c *ContestService) SelectContest(id int) (response.ContestResponse, error)
 	var contest entity.Contest
 	var contestResponse response.ContestResponse
 
-	c.DB.
+	result := c.DB.
 		Where("ID", id).
 		Preload("Problems", func(db *gorm.DB) *gorm.DB {
 			return db.Select("ID")
@@ -61,6 +65,10 @@ func (c *ContestService) SelectContest(id int) (response.ContestResponse, error)
 		Preload(clause.Associations).
 		Order("ended_at DESC, started_at DESC, id DESC").
 		Find(&contest)
+
+	if result.Error != nil {
+		return contestResponse, result.Error
+	}
 
 	var problemIds []uint
 	for _, f := range contest.Problems {
@@ -93,7 +101,10 @@ func (c *ContestService) CreateContest(r *request.ContestRequest) error {
 		EndedAt:   r.EndedAt,
 	}
 
-	c.DB.Omit("Problems.*").Create(&contest)
+	result := c.DB.Omit("Problems.*").Create(&contest)
+	if result.Error != nil {
+		return result.Error
+	}
 
 	return nil
 }
@@ -112,13 +123,24 @@ func (c *ContestService) UpdateContest(r *request.ContestRequest) error {
 		EndedAt:   r.EndedAt,
 	}
 
-	c.DB.Model(&entity.Contest{}).Association("Problems").Replace(problem)
-	c.DB.Model(&entity.Contest{}).Omit("Problems").Updates(contest)
+	error := c.DB.Model(&entity.Contest{}).Association("Problems").Replace(problem)
+	if error != nil {
+		return error
+	}
+
+	result := c.DB.Model(&entity.Contest{}).Omit("Problems").Updates(contest)
+	if result.Error != nil {
+		return result.Error
+	}
 
 	return nil
 }
 
 func (c *ContestService) DeleteContest(id int) error {
-	c.DB.Delete(&entity.Contest{}, id)
+	result := c.DB.Delete(&entity.Contest{}, id)
+	if result.Error != nil {
+		return result.Error
+	}
+
 	return nil
 }

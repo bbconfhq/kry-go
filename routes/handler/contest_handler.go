@@ -82,7 +82,7 @@ func (contestHandler *ContestHandler) PostContest(c echo.Context) error {
 // @Success      200	{object}	response.ContestResponse
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
-// @Router       /contest/:contestId [get]
+// @Router       /contest/{contest_id} [get]
 func (contestHandler *ContestHandler) GetContest(c echo.Context) error {
 	id, err := strconv.ParseInt(c.QueryParam("contest_id"), 10, 0)
 	if err != nil || id <= 0 {
@@ -107,7 +107,7 @@ func (contestHandler *ContestHandler) GetContest(c echo.Context) error {
 // @Success      201	{object}	nil
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
-// @Router       /contest/:contestId [put]
+// @Router       /contest/{contest_id} [put]
 func (contestHandler *ContestHandler) PutContest(c echo.Context) error {
 	var contestRequest request.ContestRequest
 
@@ -132,7 +132,7 @@ func (contestHandler *ContestHandler) PutContest(c echo.Context) error {
 // @Success      204	{object}	nil
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
-// @Router       /contest/:contestId [delete]
+// @Router       /contest/{contest_id} [delete]
 func (contestHandler *ContestHandler) DeleteContest(c echo.Context) error {
 	id, err := strconv.ParseInt(c.QueryParam("contest_id"), 10, 0)
 	if err != nil || id <= 0 {

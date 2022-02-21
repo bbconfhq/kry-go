@@ -117,7 +117,7 @@ paths:
       summary: Post contest
       tags:
       - contest
-  /contest/:contestId:
+  /contest/{contest_id}:
     delete:
       consumes:
       - application/json

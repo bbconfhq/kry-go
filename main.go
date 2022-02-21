@@ -31,7 +31,7 @@ func main() {
 	routes.InitRouter(app)
 	db.MigrateDatabase(app.DB)
 
-	if err := app.Run(":8000"); err != nil {
+	if err := app.Run(":8888"); err != nil {
 		log.Fatal(err)
 	}
 }
