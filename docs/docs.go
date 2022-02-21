@@ -237,6 +237,219 @@ const docTemplate_swagger = `{
                     }
                 }
             }
+        },
+        "/problem": {
+            "get": {
+                "description": "Get problems",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "problem"
+                ],
+                "summary": "Get problems",
+                "parameters": [
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "Page of problems",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/response.ProblemResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Register problem",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "problem"
+                ],
+                "summary": "Post problem",
+                "parameters": [
+                    {
+                        "description": "Necessary problem information",
+                        "name": "contest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ProblemRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/problem/{problem_id}": {
+            "get": {
+                "description": "Get problem detail",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "problem"
+                ],
+                "summary": "Get problem detail",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Contest ID",
+                        "name": "problem_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ContestResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Edit problem detail",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "problem"
+                ],
+                "summary": "Put problem detail",
+                "parameters": [
+                    {
+                        "description": "Necessary contest information",
+                        "name": "problem",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.ContestRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete problem detail",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "problem"
+                ],
+                "summary": "Delete problem detail",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Contest ID",
+                        "name": "problem_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -258,8 +471,7 @@ const docTemplate_swagger = `{
             ],
             "properties": {
                 "content": {
-                    "type": "string",
-                    "maxLength": 191
+                    "type": "string"
                 },
                 "ended_at": {
                     "type": "string"
@@ -274,7 +486,41 @@ const docTemplate_swagger = `{
                     "type": "string"
                 },
                 "title": {
+                    "type": "string",
+                    "maxLength": 191
+                }
+            }
+        },
+        "request.ProblemRequest": {
+            "description": "Necessary problem information when request",
+            "type": "object",
+            "required": [
+                "content",
+                "tags",
+                "title"
+            ],
+            "properties": {
+                "content": {
                     "type": "string"
+                },
+                "memory_limit": {
+                    "type": "integer"
+                },
+                "note": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "time_limit": {
+                    "type": "number"
+                },
+                "title": {
+                    "type": "string",
+                    "maxLength": 191
                 }
             }
         },
@@ -301,6 +547,48 @@ const docTemplate_swagger = `{
                     "type": "string"
                 },
                 "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.ProblemResponse": {
+            "description": "Problem information server responses",
+            "type": "object",
+            "properties": {
+                "acceptCount": {
+                    "type": "integer"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "memoryLimit": {
+                    "type": "integer"
+                },
+                "note": {
+                    "type": "string"
+                },
+                "submitCount": {
+                    "type": "integer"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "timeLimit": {
+                    "type": "number"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
                     "type": "string"
                 }
             }

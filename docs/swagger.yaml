@@ -7,7 +7,6 @@ definitions:
     description: Necessary contest information when request
     properties:
       content:
-        maxLength: 191
         type: string
       ended_at:
         type: string
@@ -18,12 +17,36 @@ definitions:
       started_at:
         type: string
       title:
+        maxLength: 191
         type: string
     required:
     - content
     - ended_at
     - problem_ids
     - started_at
+    - title
+    type: object
+  request.ProblemRequest:
+    description: Necessary problem information when request
+    properties:
+      content:
+        type: string
+      memory_limit:
+        type: integer
+      note:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      time_limit:
+        type: number
+      title:
+        maxLength: 191
+        type: string
+    required:
+    - content
+    - tags
     - title
     type: object
   response.ContestResponse:
@@ -42,6 +65,34 @@ definitions:
       startedAt:
         type: string
       title:
+        type: string
+    type: object
+  response.ProblemResponse:
+    description: Problem information server responses
+    properties:
+      acceptCount:
+        type: integer
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: integer
+      memoryLimit:
+        type: integer
+      note:
+        type: string
+      submitCount:
+        type: integer
+      tags:
+        items:
+          type: string
+        type: array
+      timeLimit:
+        type: number
+      title:
+        type: string
+      updatedAt:
         type: string
     type: object
 info:
@@ -199,4 +250,145 @@ paths:
       summary: Put contest detail
       tags:
       - contest
+  /problem:
+    get:
+      consumes:
+      - application/json
+      description: Get problems
+      parameters:
+      - description: Page of problems
+        in: query
+        minimum: 1
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/response.ProblemResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Get problems
+      tags:
+      - problem
+    post:
+      consumes:
+      - application/json
+      description: Register problem
+      parameters:
+      - description: Necessary problem information
+        in: body
+        name: contest
+        required: true
+        schema:
+          $ref: '#/definitions/request.ProblemRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Post problem
+      tags:
+      - problem
+  /problem/{problem_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete problem detail
+      parameters:
+      - description: Contest ID
+        in: path
+        name: problem_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Delete problem detail
+      tags:
+      - problem
+    get:
+      consumes:
+      - application/json
+      description: Get problem detail
+      parameters:
+      - description: Contest ID
+        in: path
+        name: problem_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ContestResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Get problem detail
+      tags:
+      - problem
+    put:
+      consumes:
+      - application/json
+      description: Edit problem detail
+      parameters:
+      - description: Necessary contest information
+        in: body
+        name: problem
+        required: true
+        schema:
+          $ref: '#/definitions/request.ContestRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Put problem detail
+      tags:
+      - problem
 swagger: "2.0"
