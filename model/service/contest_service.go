@@ -12,13 +12,13 @@ type ContestService struct {
 	DB *gorm.DB
 }
 
-func (c *ContestService) SelectContestsAt(offset int, limit int) ([]response.ContestResponse, error) {
+func (s *ContestService) SelectContestsAt(offset int, limit int) ([]response.ContestResponse, error) {
 	var contests []entity.Contest
 	var contestsResponse []response.ContestResponse
 
-	result := c.DB.
+	result := s.DB.
 		Preload("Problems", func(db *gorm.DB) *gorm.DB {
-			return db.Select("ID")
+			return db.Select("id")
 		}).
 		Preload(clause.Associations).
 		Order("ended_at DESC, started_at DESC, id DESC").
@@ -53,14 +53,36 @@ func (c *ContestService) SelectContestsAt(offset int, limit int) ([]response.Con
 	return contestsResponse, nil
 }
 
-func (c *ContestService) SelectContest(id int) (response.ContestResponse, error) {
+func (s *ContestService) CreateContest(r *request.ContestRequest) error {
+	var problems []entity.Problem
+	for _, e := range r.ProblemIds {
+		problems = append(problems, entity.Problem{ID: e})
+	}
+
+	contest := entity.Contest{
+		Title:     r.Title,
+		Content:   r.Content,
+		Problems:  problems,
+		StartedAt: r.StartedAt,
+		EndedAt:   r.EndedAt,
+	}
+
+	result := s.DB.Omit("Problems.*").Create(&contest)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
+}
+
+func (s *ContestService) SelectContest(id int) (response.ContestResponse, error) {
 	var contest entity.Contest
 	var contestResponse response.ContestResponse
 
-	result := c.DB.
-		Where("ID", id).
+	result := s.DB.
+		Where("id", id).
 		Preload("Problems", func(db *gorm.DB) *gorm.DB {
-			return db.Select("ID")
+			return db.Select("id")
 		}).
 		Preload(clause.Associations).
 		Order("ended_at DESC, started_at DESC, id DESC").
@@ -87,7 +109,7 @@ func (c *ContestService) SelectContest(id int) (response.ContestResponse, error)
 	return contestResponse, nil
 }
 
-func (c *ContestService) CreateContest(r *request.ContestRequest) error {
+func (s *ContestService) UpdateContest(r *request.ContestRequest) error {
 	var problem []entity.Problem
 	for _, e := range r.ProblemIds {
 		problem = append(problem, entity.Problem{ID: e})
@@ -101,7 +123,12 @@ func (c *ContestService) CreateContest(r *request.ContestRequest) error {
 		EndedAt:   r.EndedAt,
 	}
 
-	result := c.DB.Omit("Problems.*").Create(&contest)
+	err := s.DB.Model(&entity.Contest{}).Association("Problems").Replace(problem)
+	if err != nil {
+		return err
+	}
+
+	result := s.DB.Model(&entity.Contest{}).Omit("Problems").Updates(contest)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -109,35 +136,8 @@ func (c *ContestService) CreateContest(r *request.ContestRequest) error {
 	return nil
 }
 
-func (c *ContestService) UpdateContest(r *request.ContestRequest) error {
-	var problem []entity.Problem
-	for _, e := range r.ProblemIds {
-		problem = append(problem, entity.Problem{ID: e})
-	}
-
-	contest := entity.Contest{
-		Title:     r.Title,
-		Content:   r.Content,
-		Problems:  problem,
-		StartedAt: r.StartedAt,
-		EndedAt:   r.EndedAt,
-	}
-
-	error := c.DB.Model(&entity.Contest{}).Association("Problems").Replace(problem)
-	if error != nil {
-		return error
-	}
-
-	result := c.DB.Model(&entity.Contest{}).Omit("Problems").Updates(contest)
-	if result.Error != nil {
-		return result.Error
-	}
-
-	return nil
-}
-
-func (c *ContestService) DeleteContest(id int) error {
-	result := c.DB.Delete(&entity.Contest{}, id)
+func (s *ContestService) DeleteContest(id int) error {
+	result := s.DB.Delete(&entity.Contest{}, id)
 	if result.Error != nil {
 		return result.Error
 	}

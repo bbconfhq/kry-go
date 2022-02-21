@@ -16,6 +16,22 @@ func MakeTestcaseHandler(server *server.Server) *TestcaseHandler {
 	return &TestcaseHandler{server: server}
 }
 
-func (testcaseHandler *TestcaseHandler) GetTestcase(c echo.Context) error {
+func (h *TestcaseHandler) GetTestcases(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *TestcaseHandler) PostTestcase(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *TestcaseHandler) GetTestcase(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *TestcaseHandler) PutTestcase(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *TestcaseHandler) DeleteTestcase(c echo.Context) error {
 	return c.JSON(http.StatusOK, 0)
 }

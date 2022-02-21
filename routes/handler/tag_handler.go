@@ -16,6 +16,22 @@ func MakeTagHandler(server *server.Server) *TagHandler {
 	return &TagHandler{server: server}
 }
 
-func (tagHandler *TagHandler) GetTag(c echo.Context) error {
+func (h *TagHandler) GetTags(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *TagHandler) PostTag(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *TagHandler) GetTag(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *TagHandler) PutTag(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *TagHandler) DeleteTag(c echo.Context) error {
 	return c.JSON(http.StatusOK, 0)
 }

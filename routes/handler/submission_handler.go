@@ -16,6 +16,22 @@ func MakeSubmissionHandler(server *server.Server) *SubmissionHandler {
 	return &SubmissionHandler{server: server}
 }
 
-func (submissionHandler *SubmissionHandler) GetSubmission(c echo.Context) error {
+func (h *SubmissionHandler) GetSubmissions(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *SubmissionHandler) PostSubmission(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *SubmissionHandler) GetSubmission(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *SubmissionHandler) PutSubmission(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *SubmissionHandler) DeleteSubmission(c echo.Context) error {
 	return c.JSON(http.StatusOK, 0)
 }

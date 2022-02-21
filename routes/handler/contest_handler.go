@@ -32,14 +32,14 @@ func MakeContestHandler(server *server.Server) *ContestHandler {
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
 // @Router       /contest [get]
-func (contestHandler *ContestHandler) GetContests(c echo.Context) error {
+func (h *ContestHandler) GetContests(c echo.Context) error {
 	page, err := strconv.ParseInt(c.QueryParam("page"), 10, 0)
 	if err != nil || page <= 0 {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
 	offset := int(100 * (page - 1))
-	result, err := contestHandler.service.SelectContestsAt(offset, 100)
+	result, err := h.service.SelectContestsAt(offset, 100)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
@@ -58,14 +58,14 @@ func (contestHandler *ContestHandler) GetContests(c echo.Context) error {
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
 // @Router       /contest [post]
-func (contestHandler *ContestHandler) PostContest(c echo.Context) error {
+func (h *ContestHandler) PostContest(c echo.Context) error {
 	var contestRequest request.ContestRequest
 
 	if err := (&echo.DefaultBinder{}).BindBody(c, &contestRequest); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	if err := contestHandler.service.CreateContest(&contestRequest); err != nil {
+	if err := h.service.CreateContest(&contestRequest); err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
@@ -83,13 +83,13 @@ func (contestHandler *ContestHandler) PostContest(c echo.Context) error {
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
 // @Router       /contest/{contest_id} [get]
-func (contestHandler *ContestHandler) GetContest(c echo.Context) error {
-	id, err := strconv.ParseInt(c.QueryParam("contest_id"), 10, 0)
+func (h *ContestHandler) GetContest(c echo.Context) error {
+	id, err := strconv.ParseInt(c.Param("contest_id"), 10, 0)
 	if err != nil || id <= 0 {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	result, err := contestHandler.service.SelectContest(int(id))
+	result, err := h.service.SelectContest(int(id))
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
@@ -108,14 +108,14 @@ func (contestHandler *ContestHandler) GetContest(c echo.Context) error {
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
 // @Router       /contest/{contest_id} [put]
-func (contestHandler *ContestHandler) PutContest(c echo.Context) error {
+func (h *ContestHandler) PutContest(c echo.Context) error {
 	var contestRequest request.ContestRequest
 
 	if err := (&echo.DefaultBinder{}).BindBody(c, &contestRequest); err != nil {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	if err := contestHandler.service.UpdateContest(&contestRequest); err != nil {
+	if err := h.service.UpdateContest(&contestRequest); err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 
@@ -133,13 +133,13 @@ func (contestHandler *ContestHandler) PutContest(c echo.Context) error {
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
 // @Router       /contest/{contest_id} [delete]
-func (contestHandler *ContestHandler) DeleteContest(c echo.Context) error {
+func (h *ContestHandler) DeleteContest(c echo.Context) error {
 	id, err := strconv.ParseInt(c.QueryParam("contest_id"), 10, 0)
 	if err != nil || id <= 0 {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
 
-	if err := contestHandler.service.DeleteContest(int(id)); err != nil {
+	if err := h.service.DeleteContest(int(id)); err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
 

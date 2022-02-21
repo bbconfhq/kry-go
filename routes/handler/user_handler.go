@@ -16,6 +16,22 @@ func MakeUserHandler(server *server.Server) *UserHandler {
 	return &UserHandler{server: server}
 }
 
-func (userHandler *UserHandler) GetUser(c echo.Context) error {
+func (h *UserHandler) GetUsers(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *UserHandler) PostUser(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *UserHandler) GetUser(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *UserHandler) PutUser(c echo.Context) error {
+	return c.JSON(http.StatusOK, 0)
+}
+
+func (h *UserHandler) DeleteUser(c echo.Context) error {
 	return c.JSON(http.StatusOK, 0)
 }
