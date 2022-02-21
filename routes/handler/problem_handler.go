@@ -21,7 +21,7 @@ func MakeProblemHandler(server *server.Server) *ProblemHandler {
 // GetProblems   godoc
 // @Summary      Get problems
 // @Description  Get problems
-// @Tags         problem
+// @Tags         Problem Endpoints
 // @Accept       json
 // @Produce      json
 // @Param        page	query	uint	true	"Page of problems"	minimum(1)
@@ -47,7 +47,7 @@ func (h *ProblemHandler) GetProblems(c echo.Context) error {
 // PostProblem   godoc
 // @Summary      Post problem
 // @Description  Register problem
-// @Tags         problem
+// @Tags         Problem Endpoints
 // @Accept       json
 // @Produce      json
 // @Param        contest	body	request.ProblemRequest	true	"Necessary problem information"
@@ -72,7 +72,7 @@ func (h *ProblemHandler) PostProblem(c echo.Context) error {
 // GetProblem    godoc
 // @Summary      Get problem detail
 // @Description  Get problem detail
-// @Tags         problem
+// @Tags         Problem Endpoints
 // @Accept       json
 // @Produce      json
 // @Param        problem_id	path	uint					true	"Contest ID"
@@ -97,7 +97,7 @@ func (h *ProblemHandler) GetProblem(c echo.Context) error {
 // PutProblem    godoc
 // @Summary      Put problem detail
 // @Description  Edit problem detail
-// @Tags         problem
+// @Tags         Problem Endpoints
 // @Accept       json
 // @Produce      json
 // @Param        problem	body	request.ContestRequest	true	"Necessary contest information"
@@ -122,7 +122,7 @@ func (h *ProblemHandler) PutProblem(c echo.Context) error {
 // DeleteProblem godoc
 // @Summary      Delete problem detail
 // @Description  Delete problem detail
-// @Tags         problem
+// @Tags         Problem Endpoints
 // @Accept       json
 // @Produce      json
 // @Param        problem_id	path	uint					true	"Contest ID"

@@ -35,7 +35,7 @@ const docTemplate_swagger = `{
                     "application/json"
                 ],
                 "tags": [
-                    "contest"
+                    "Contest Endpoints"
                 ],
                 "summary": "Get contests",
                 "parameters": [
@@ -81,7 +81,7 @@ const docTemplate_swagger = `{
                     "application/json"
                 ],
                 "tags": [
-                    "contest"
+                    "Contest Endpoints"
                 ],
                 "summary": "Post contest",
                 "parameters": [
@@ -124,7 +124,7 @@ const docTemplate_swagger = `{
                     "application/json"
                 ],
                 "tags": [
-                    "contest"
+                    "Contest Endpoints"
                 ],
                 "summary": "Get contest detail",
                 "parameters": [
@@ -166,7 +166,7 @@ const docTemplate_swagger = `{
                     "application/json"
                 ],
                 "tags": [
-                    "contest"
+                    "Contest Endpoints"
                 ],
                 "summary": "Put contest detail",
                 "parameters": [
@@ -207,7 +207,7 @@ const docTemplate_swagger = `{
                     "application/json"
                 ],
                 "tags": [
-                    "contest"
+                    "Contest Endpoints"
                 ],
                 "summary": "Delete contest detail",
                 "parameters": [
@@ -248,7 +248,7 @@ const docTemplate_swagger = `{
                     "application/json"
                 ],
                 "tags": [
-                    "problem"
+                    "Problem Endpoints"
                 ],
                 "summary": "Get problems",
                 "parameters": [
@@ -294,7 +294,7 @@ const docTemplate_swagger = `{
                     "application/json"
                 ],
                 "tags": [
-                    "problem"
+                    "Problem Endpoints"
                 ],
                 "summary": "Post problem",
                 "parameters": [
@@ -337,7 +337,7 @@ const docTemplate_swagger = `{
                     "application/json"
                 ],
                 "tags": [
-                    "problem"
+                    "Problem Endpoints"
                 ],
                 "summary": "Get problem detail",
                 "parameters": [
@@ -379,7 +379,7 @@ const docTemplate_swagger = `{
                     "application/json"
                 ],
                 "tags": [
-                    "problem"
+                    "Problem Endpoints"
                 ],
                 "summary": "Put problem detail",
                 "parameters": [
@@ -420,7 +420,7 @@ const docTemplate_swagger = `{
                     "application/json"
                 ],
                 "tags": [
-                    "problem"
+                    "Problem Endpoints"
                 ],
                 "summary": "Delete problem detail",
                 "parameters": [

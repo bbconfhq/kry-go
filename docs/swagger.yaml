@@ -140,7 +140,7 @@ paths:
             $ref: '#/definitions/echo.HTTPError'
       summary: Get contests
       tags:
-      - contest
+      - Contest Endpoints
     post:
       consumes:
       - application/json
@@ -167,7 +167,7 @@ paths:
             $ref: '#/definitions/echo.HTTPError'
       summary: Post contest
       tags:
-      - contest
+      - Contest Endpoints
   /contest/{contest_id}:
     delete:
       consumes:
@@ -194,7 +194,7 @@ paths:
             $ref: '#/definitions/echo.HTTPError'
       summary: Delete contest detail
       tags:
-      - contest
+      - Contest Endpoints
     get:
       consumes:
       - application/json
@@ -222,7 +222,7 @@ paths:
             $ref: '#/definitions/echo.HTTPError'
       summary: Get contest detail
       tags:
-      - contest
+      - Contest Endpoints
     put:
       consumes:
       - application/json
@@ -249,7 +249,7 @@ paths:
             $ref: '#/definitions/echo.HTTPError'
       summary: Put contest detail
       tags:
-      - contest
+      - Contest Endpoints
   /problem:
     get:
       consumes:
@@ -281,7 +281,7 @@ paths:
             $ref: '#/definitions/echo.HTTPError'
       summary: Get problems
       tags:
-      - problem
+      - Problem Endpoints
     post:
       consumes:
       - application/json
@@ -308,7 +308,7 @@ paths:
             $ref: '#/definitions/echo.HTTPError'
       summary: Post problem
       tags:
-      - problem
+      - Problem Endpoints
   /problem/{problem_id}:
     delete:
       consumes:
@@ -335,7 +335,7 @@ paths:
             $ref: '#/definitions/echo.HTTPError'
       summary: Delete problem detail
       tags:
-      - problem
+      - Problem Endpoints
     get:
       consumes:
       - application/json
@@ -363,7 +363,7 @@ paths:
             $ref: '#/definitions/echo.HTTPError'
       summary: Get problem detail
       tags:
-      - problem
+      - Problem Endpoints
     put:
       consumes:
       - application/json
@@ -390,5 +390,5 @@ paths:
             $ref: '#/definitions/echo.HTTPError'
       summary: Put problem detail
       tags:
-      - problem
+      - Problem Endpoints
 swagger: "2.0"

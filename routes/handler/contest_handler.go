@@ -24,7 +24,7 @@ func MakeContestHandler(server *server.Server) *ContestHandler {
 // GetContests   godoc
 // @Summary      Get contests
 // @Description  Get contests
-// @Tags         contest
+// @Tags         Contest Endpoints
 // @Accept       json
 // @Produce      json
 // @Param        page	query	uint	true	"Page of contests"	minimum(1)
@@ -50,7 +50,7 @@ func (h *ContestHandler) GetContests(c echo.Context) error {
 // PostContest   godoc
 // @Summary      Post contest
 // @Description  Register contest
-// @Tags         contest
+// @Tags         Contest Endpoints
 // @Accept       json
 // @Produce      json
 // @Param        contest	body	request.ContestRequest	true	"Necessary contest information"
@@ -75,7 +75,7 @@ func (h *ContestHandler) PostContest(c echo.Context) error {
 // GetContest    godoc
 // @Summary      Get contest detail
 // @Description  Get contest detail
-// @Tags         contest
+// @Tags         Contest Endpoints
 // @Accept       json
 // @Produce      json
 // @Param        contest_id	path	uint					true	"Contest ID"
@@ -100,7 +100,7 @@ func (h *ContestHandler) GetContest(c echo.Context) error {
 // PutContest    godoc
 // @Summary      Put contest detail
 // @Description  Edit contest detail
-// @Tags         contest
+// @Tags         Contest Endpoints
 // @Accept       json
 // @Produce      json
 // @Param        contest	body	request.ContestRequest	true	"Necessary contest information"
@@ -125,7 +125,7 @@ func (h *ContestHandler) PutContest(c echo.Context) error {
 // DeleteContest godoc
 // @Summary      Delete contest detail
 // @Description  Delete contest detail
-// @Tags         contest
+// @Tags         Contest Endpoints
 // @Accept       json
 // @Produce      json
 // @Param        contest_id	path	uint					true	"Contest ID"
