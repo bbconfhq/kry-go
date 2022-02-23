@@ -8,8 +8,6 @@ import (
 	"log"
 )
 
-// swag init --parseDependency --parseInternal
-
 // @title           kry-go
 // @version         0.1
 // @description     kry(Kim-gi-dong, Ryo, Yun) is simple problem-solving contest server written in Go.

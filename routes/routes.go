@@ -9,6 +9,7 @@ import (
 	"kry-go/routes/handler"
 	"kry-go/server"
 	"os"
+	"strings"
 )
 
 func InitRouter(server *server.Server) {
@@ -25,7 +26,7 @@ func InitRouter(server *server.Server) {
 	server.Echo.Use(session.Middleware(sessions.NewCookieStore([]byte(sessionSecret))))
 	server.Echo.Use(middleware.Logger())
 
-	if os.Getenv("DEBUG") == "true" {
+	if strings.ToLower(os.Getenv("DEBUG")) == "true" {
 		server.Echo.GET("/swagger/*", echoSwagger.WrapHandler)
 	}
 
