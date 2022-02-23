@@ -16,4 +16,5 @@ type Submission struct {
 	UserID    uint
 	ProblemID uint
 	User      User
+	Problem   Problem
 }

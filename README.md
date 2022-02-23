@@ -22,7 +22,7 @@ $ git clone https://github.com/gwanryo/kry-go.git
 ```
 2. Install dependencies
 ```shell
-$ go get && go get -u
+$ go get .
 ```
 3. Edit .env.sample and save to .env
 4. (Only non-docker) Configure your DBMS properly, then run `main.go`

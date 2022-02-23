@@ -2,7 +2,6 @@ package entity
 
 import (
 	"gorm.io/gorm"
-	"time"
 )
 
 /*
@@ -31,7 +30,6 @@ ALTER TABLE `problem`
 
 type Problem struct {
 	gorm.Model
-	ID          uint    `gorm:"primaryKey"`
 	Title       string  `gorm:"type:varchar(191);unique;not null"`
 	Content     string  `gorm:"type:text;not null"`
 	Note        string  `gorm:"type:text;not null"`
@@ -39,8 +37,6 @@ type Problem struct {
 	MemoryLimit uint    `gorm:"not null"`
 	SubmitCount uint    `gorm:"default:0;not null"`
 	AcceptCount uint    `gorm:"default:0;not null"`
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
 	Testcases   []Testcase
 	Tags        []Tag `gorm:"many2many:problem_tags;"`
 }
