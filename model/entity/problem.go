@@ -23,7 +23,7 @@ CREATE TABLE `problem`
     UNIQUE KEY (`title`)
 ) ENGINE = InnoDB;
 
-// TODO
+// TODO: Alter table for initial auto_increment value
 ALTER TABLE `problem`
     AUTO_INCREMENT = 1000;
 */
