@@ -114,7 +114,7 @@ const docTemplate_swagger = `{
                 }
             }
         },
-        "/contest/{contest_id}": {
+        "/contest/{id}": {
             "get": {
                 "description": "Get contest detail",
                 "consumes": [
@@ -131,7 +131,7 @@ const docTemplate_swagger = `{
                     {
                         "type": "integer",
                         "description": "Contest ID",
-                        "name": "contest_id",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     }
@@ -214,7 +214,7 @@ const docTemplate_swagger = `{
                     {
                         "type": "integer",
                         "description": "Contest ID",
-                        "name": "contest_id",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     }
@@ -327,49 +327,7 @@ const docTemplate_swagger = `{
                 }
             }
         },
-        "/problem/{problem_id}": {
-            "get": {
-                "description": "Get problem detail",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Problem Endpoints"
-                ],
-                "summary": "Get problem detail",
-                "parameters": [
-                    {
-                        "type": "integer",
-                        "description": "Contest ID",
-                        "name": "problem_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.ContestResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/echo.HTTPError"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/echo.HTTPError"
-                        }
-                    }
-                }
-            },
+        "/problem/{id}": {
             "put": {
                 "description": "Edit problem detail",
                 "consumes": [
@@ -384,7 +342,7 @@ const docTemplate_swagger = `{
                 "summary": "Put problem detail",
                 "parameters": [
                     {
-                        "description": "Necessary contest information",
+                        "description": "Necessary problem information",
                         "name": "problem",
                         "in": "body",
                         "required": true,
@@ -426,8 +384,8 @@ const docTemplate_swagger = `{
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "Contest ID",
-                        "name": "problem_id",
+                        "description": "Problem ID",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     }
@@ -435,6 +393,50 @@ const docTemplate_swagger = `{
                 "responses": {
                     "204": {
                         "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/problem/{problem_id}": {
+            "get": {
+                "description": "Get problem detail",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Problem Endpoints"
+                ],
+                "summary": "Get problem detail",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Problem ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ProblemResponse"
+                        }
                     },
                     "400": {
                         "description": "Bad Request",
@@ -474,7 +476,7 @@ const docTemplate_swagger = `{
                         "required": true
                     },
                     {
-                        "type": "string",
+                        "type": "integer",
                         "description": "User ID",
                         "name": "user_id",
                         "in": "query"
@@ -552,7 +554,7 @@ const docTemplate_swagger = `{
                 }
             }
         },
-        "/submission/{submission_id}": {
+        "/submission/{id}": {
             "get": {
                 "description": "Get submission detail",
                 "consumes": [
@@ -569,7 +571,7 @@ const docTemplate_swagger = `{
                     {
                         "type": "integer",
                         "description": "Submission ID",
-                        "name": "submission_id",
+                        "name": "id",
                         "in": "path",
                         "required": true
                     }
@@ -580,6 +582,299 @@ const docTemplate_swagger = `{
                         "schema": {
                             "$ref": "#/definitions/response.SubmissionResponse"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Edit submission detail",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Submission Endpoints"
+                ],
+                "summary": "TODO: Put submission detail",
+                "parameters": [
+                    {
+                        "description": "Necessary submission information",
+                        "name": "submission",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.SubmissionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete submission detail",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Submission Endpoints"
+                ],
+                "summary": "TODO: Delete submission detail",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Contest ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/tag": {
+            "get": {
+                "description": "Get tags",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tag Endpoints"
+                ],
+                "summary": "Get tags",
+                "parameters": [
+                    {
+                        "minimum": 1,
+                        "type": "integer",
+                        "description": "Page of tags",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/response.TagResponse"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Register tag",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tag Endpoints"
+                ],
+                "summary": "Post tag",
+                "parameters": [
+                    {
+                        "description": "Necessary tag information",
+                        "name": "tag",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.TagRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/tag/{id}": {
+            "get": {
+                "description": "Get tag detail",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tag Endpoints"
+                ],
+                "summary": "Get tag detail",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Tag ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.TagResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Edit tag detail",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tag Endpoints"
+                ],
+                "summary": "Put tag detail",
+                "parameters": [
+                    {
+                        "description": "Necessary tag information",
+                        "name": "problem",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.TagRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/echo.HTTPError"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete tag detail",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tag Endpoints"
+                ],
+                "summary": "Delete tag detail",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Tag ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
                     },
                     "400": {
                         "description": "Bad Request",
@@ -697,6 +992,18 @@ const docTemplate_swagger = `{
                 }
             }
         },
+        "request.TagRequest": {
+            "description": "Necessary tag information when request",
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
         "response.ContestResponse": {
             "description": "Contest information server responses",
             "type": "object",
@@ -791,6 +1098,22 @@ const docTemplate_swagger = `{
                 },
                 "user_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "response.TagResponse": {
+            "description": "Tag information server responses",
+            "type": "object",
+            "required": [
+                "id",
+                "name"
+            ],
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
                 }
             }
         }

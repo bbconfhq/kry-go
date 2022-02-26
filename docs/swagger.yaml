@@ -69,6 +69,14 @@ definitions:
     - result
     - user_id
     type: object
+  request.TagRequest:
+    description: Necessary tag information when request
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
   response.ContestResponse:
     description: Contest information server responses
     properties:
@@ -134,6 +142,17 @@ definitions:
     - problem_id
     - result
     - user_id
+    type: object
+  response.TagResponse:
+    description: Tag information server responses
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - id
+    - name
     type: object
 info:
   contact:
@@ -208,7 +227,7 @@ paths:
       summary: Post contest
       tags:
       - Contest Endpoints
-  /contest/{contest_id}:
+  /contest/{id}:
     delete:
       consumes:
       - application/json
@@ -216,7 +235,7 @@ paths:
       parameters:
       - description: Contest ID
         in: path
-        name: contest_id
+        name: id
         required: true
         type: integer
       produces:
@@ -242,7 +261,7 @@ paths:
       parameters:
       - description: Contest ID
         in: path
-        name: contest_id
+        name: id
         required: true
         type: integer
       produces:
@@ -349,15 +368,15 @@ paths:
       summary: Post problem
       tags:
       - Problem Endpoints
-  /problem/{problem_id}:
+  /problem/{id}:
     delete:
       consumes:
       - application/json
       description: Delete problem detail
       parameters:
-      - description: Contest ID
+      - description: Problem ID
         in: path
-        name: problem_id
+        name: id
         required: true
         type: integer
       produces:
@@ -376,40 +395,12 @@ paths:
       summary: Delete problem detail
       tags:
       - Problem Endpoints
-    get:
-      consumes:
-      - application/json
-      description: Get problem detail
-      parameters:
-      - description: Contest ID
-        in: path
-        name: problem_id
-        required: true
-        type: integer
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/response.ContestResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/echo.HTTPError'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/echo.HTTPError'
-      summary: Get problem detail
-      tags:
-      - Problem Endpoints
     put:
       consumes:
       - application/json
       description: Edit problem detail
       parameters:
-      - description: Necessary contest information
+      - description: Necessary problem information
         in: body
         name: problem
         required: true
@@ -431,6 +422,35 @@ paths:
       summary: Put problem detail
       tags:
       - Problem Endpoints
+  /problem/{problem_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get problem detail
+      parameters:
+      - description: Problem ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ProblemResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Get problem detail
+      tags:
+      - Problem Endpoints
   /submission:
     get:
       consumes:
@@ -446,7 +466,7 @@ paths:
       - description: User ID
         in: query
         name: user_id
-        type: string
+        type: integer
       - description: Type of language
         in: query
         name: language
@@ -498,7 +518,33 @@ paths:
       summary: Post submission
       tags:
       - Submission Endpoints
-  /submission/{submission_id}:
+  /submission/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete submission detail
+      parameters:
+      - description: Contest ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: 'TODO: Delete submission detail'
+      tags:
+      - Submission Endpoints
     get:
       consumes:
       - application/json
@@ -506,7 +552,7 @@ paths:
       parameters:
       - description: Submission ID
         in: path
-        name: submission_id
+        name: id
         required: true
         type: integer
       produces:
@@ -527,4 +573,172 @@ paths:
       summary: Get submission detail
       tags:
       - Submission Endpoints
+    put:
+      consumes:
+      - application/json
+      description: Edit submission detail
+      parameters:
+      - description: Necessary submission information
+        in: body
+        name: submission
+        required: true
+        schema:
+          $ref: '#/definitions/request.SubmissionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: 'TODO: Put submission detail'
+      tags:
+      - Submission Endpoints
+  /tag:
+    get:
+      consumes:
+      - application/json
+      description: Get tags
+      parameters:
+      - description: Page of tags
+        in: query
+        minimum: 1
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/response.TagResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Get tags
+      tags:
+      - Tag Endpoints
+    post:
+      consumes:
+      - application/json
+      description: Register tag
+      parameters:
+      - description: Necessary tag information
+        in: body
+        name: tag
+        required: true
+        schema:
+          $ref: '#/definitions/request.TagRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Post tag
+      tags:
+      - Tag Endpoints
+  /tag/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete tag detail
+      parameters:
+      - description: Tag ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Delete tag detail
+      tags:
+      - Tag Endpoints
+    get:
+      consumes:
+      - application/json
+      description: Get tag detail
+      parameters:
+      - description: Tag ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.TagResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Get tag detail
+      tags:
+      - Tag Endpoints
+    put:
+      consumes:
+      - application/json
+      description: Edit tag detail
+      parameters:
+      - description: Necessary tag information
+        in: body
+        name: problem
+        required: true
+        schema:
+          $ref: '#/definitions/request.TagRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/echo.HTTPError'
+      summary: Put tag detail
+      tags:
+      - Tag Endpoints
 swagger: "2.0"
