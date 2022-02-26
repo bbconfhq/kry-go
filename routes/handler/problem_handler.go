@@ -75,13 +75,13 @@ func (h *ProblemHandler) PostProblem(c echo.Context) error {
 // @Tags         Problem Endpoints
 // @Accept       json
 // @Produce      json
-// @Param        problem_id	path	uint					true	"Contest ID"
-// @Success      200	{object}	response.ContestResponse
+// @Param        id		path	uint					true	"Problem ID"
+// @Success      200	{object}	response.ProblemResponse
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
 // @Router       /problem/{problem_id} [get]
 func (h *ProblemHandler) GetProblem(c echo.Context) error {
-	id, err := strconv.ParseInt(c.Param("problem_id"), 10, 0)
+	id, err := strconv.ParseInt(c.Param("id"), 10, 0)
 	if err != nil || id <= 0 {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
@@ -100,11 +100,11 @@ func (h *ProblemHandler) GetProblem(c echo.Context) error {
 // @Tags         Problem Endpoints
 // @Accept       json
 // @Produce      json
-// @Param        problem	body	request.ContestRequest	true	"Necessary contest information"
+// @Param        problem	body	request.ContestRequest	true	"Necessary problem information"
 // @Success      201	{object}	nil
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
-// @Router       /problem/{problem_id} [put]
+// @Router       /problem/{id} [put]
 func (h *ProblemHandler) PutProblem(c echo.Context) error {
 	var problemRequest request.ProblemRequest
 
@@ -125,13 +125,13 @@ func (h *ProblemHandler) PutProblem(c echo.Context) error {
 // @Tags         Problem Endpoints
 // @Accept       json
 // @Produce      json
-// @Param        problem_id	path	uint					true	"Contest ID"
+// @Param        id		path	uint					true	"Problem ID"
 // @Success      204	{object}	nil
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
-// @Router       /problem/{problem_id} [delete]
+// @Router       /problem/{id} [delete]
 func (h *ProblemHandler) DeleteProblem(c echo.Context) error {
-	id, err := strconv.ParseInt(c.QueryParam("problem_id"), 10, 0)
+	id, err := strconv.ParseInt(c.QueryParam("id"), 10, 0)
 	if err != nil || id <= 0 {
 		return c.JSON(http.StatusBadRequest, err.Error())
 	}
