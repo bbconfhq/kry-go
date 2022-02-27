@@ -2,9 +2,11 @@ package handler
 
 import (
 	"github.com/labstack/echo/v4"
+	"kry-go/model/request"
 	"kry-go/model/service"
 	"kry-go/server"
 	"net/http"
+	"strconv"
 )
 
 type TagHandler struct {
@@ -28,7 +30,19 @@ func MakeTagHandler(server *server.Server) *TagHandler {
 // @Failure       500	{object}	echo.HTTPError
 // @Router        /tag [get]
 func (h *TagHandler) GetTags(c echo.Context) error {
-	return c.JSON(http.StatusOK, 0)
+	page, err := strconv.ParseInt(c.QueryParam("page"), 10, 0)
+
+	if err != nil || page <= 0 {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	offset := int(100 * (page - 1))
+	result, err := h.service.SelectTagsAt(offset, 100)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, result)
 }
 
 // PostTag godoc
@@ -43,7 +57,17 @@ func (h *TagHandler) GetTags(c echo.Context) error {
 // @Failure       500	{object}	echo.HTTPError
 // @Router        /tag [post]
 func (h *TagHandler) PostTag(c echo.Context) error {
-	return c.JSON(http.StatusOK, 0)
+	var tagRequest request.TagRequest
+
+	if err := (&echo.DefaultBinder{}).BindBody(c, &tagRequest); err != nil {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	if err := h.service.CreateTag(&tagRequest); err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.JSON(http.StatusCreated, nil)
 }
 
 // GetTag godoc
@@ -58,7 +82,17 @@ func (h *TagHandler) PostTag(c echo.Context) error {
 // @Failure      500	{object}	echo.HTTPError
 // @Router       /tag/{id} [get]
 func (h *TagHandler) GetTag(c echo.Context) error {
-	return c.JSON(http.StatusOK, 0)
+	id, err := strconv.ParseInt(c.QueryParam("id"), 10, 0)
+	if err != nil || id <= 0 {
+		return c.JSON(http.StatusBadRequest, err.Error())
+	}
+
+	result, err := h.service.SelectTag(int(id))
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err.Error())
+	}
+
+	return c.JSON(http.StatusOK, result)
 }
 
 // PutTag    godoc
@@ -73,7 +107,7 @@ func (h *TagHandler) GetTag(c echo.Context) error {
 // @Failure      500	{object}	echo.HTTPError
 // @Router       /tag/{id} [put]
 func (h *TagHandler) PutTag(c echo.Context) error {
-	return c.JSON(http.StatusOK, 0)
+	return c.JSON(http.StatusCreated, nil)
 }
 
 // DeleteTag godoc
@@ -88,5 +122,5 @@ func (h *TagHandler) PutTag(c echo.Context) error {
 // @Failure      500	{object}	echo.HTTPError
 // @Router       /tag/{id} [delete]
 func (h *TagHandler) DeleteTag(c echo.Context) error {
-	return c.JSON(http.StatusOK, 0)
+	return c.JSON(http.StatusNoContent, nil)
 }
