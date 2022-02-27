@@ -46,7 +46,7 @@ func (h *SubmissionHandler) GetSubmissions(c echo.Context) error {
 	language := c.QueryParam("language")
 
 	offset := int(100 * (page - 1))
-	result, err := h.service.SelectSubmissionsByFilter(offset, int(id), language, offset)
+	result, err := h.service.SelectSubmissionsByFilter(offset, int(id), language, 100)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error())
 	}
@@ -102,34 +102,4 @@ func (h *SubmissionHandler) GetSubmission(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, result)
-}
-
-// PutSubmission godoc
-// @Summary      TODO: Put submission detail
-// @Description  Edit submission detail
-// @Tags         Submission Endpoints
-// @Accept       json
-// @Produce      json
-// @Param        submission	body	request.SubmissionRequest	true	"Necessary submission information"
-// @Success      201	{object}	nil
-// @Failure      400	{object}	echo.HTTPError
-// @Failure      500	{object}	echo.HTTPError
-// @Router       /submission/{id} [put]
-func (h *SubmissionHandler) PutSubmission(c echo.Context) error {
-	return c.JSON(http.StatusOK, nil)
-}
-
-// DeleteSubmission godoc
-// @Summary      TODO: Delete submission detail
-// @Description  Delete submission detail
-// @Tags         Submission Endpoints
-// @Accept       json
-// @Produce      json
-// @Param        id	path	uint					true	"Contest ID"
-// @Success      204	{object}	nil
-// @Failure      400	{object}	echo.HTTPError
-// @Failure      500	{object}	echo.HTTPError
-// @Router       /submission/{id} [delete]
-func (h *SubmissionHandler) DeleteSubmission(c echo.Context) error {
-	return c.JSON(http.StatusOK, nil)
 }

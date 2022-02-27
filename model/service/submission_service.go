@@ -68,7 +68,25 @@ func (s *SubmissionService) CreateSubmission(r *request.SubmissionRequest) error
 }
 
 func (s *SubmissionService) SelectSubmission(id int) (response.SubmissionResponse, error) {
-	var submission response.SubmissionResponse
+	var submission entity.Submission
+	var submissionResponse response.SubmissionResponse
 
-	return submission, nil
+	result := s.DB.
+		Where("id", id).
+		Preload(clause.Associations).
+		Find(&submission)
+
+	if result.Error != nil {
+		return submissionResponse, result.Error
+	}
+
+	submissionResponse = response.SubmissionResponse{
+		Result:    submission.Result,
+		Language:  submission.Language,
+		Code:      submission.Code,
+		UserID:    submission.UserID,
+		ProblemID: submission.ProblemID,
+	}
+
+	return submissionResponse, nil
 }
