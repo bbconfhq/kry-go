@@ -19,6 +19,7 @@ CREATE TABLE `testcase`
 
 type Testcase struct {
 	gorm.Model
+	ID        uint   `gorm:"primaryKey"`
 	Visible   bool   `gorm:"not null"`
 	Input     string `gorm:"type:text;not null"`
 	Output    string `gorm:"type:text;not null"`

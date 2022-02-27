@@ -30,6 +30,7 @@ ALTER TABLE `problem`
 
 type Problem struct {
 	gorm.Model
+	ID          uint    `gorm:"primaryKey"`
 	Title       string  `gorm:"type:varchar(191);unique;not null"`
 	Content     string  `gorm:"type:text;not null"`
 	Note        string  `gorm:"type:text;not null"`

@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `user`
 
 type User struct {
 	gorm.Model
+	ID        uint   `gorm:"primaryKey"`
 	Username  string `gorm:"unique;not null"`
 	AvatarUrl string `gorm:"unique;not null"`
 	Bio       string `gorm:"unique;not null"`
