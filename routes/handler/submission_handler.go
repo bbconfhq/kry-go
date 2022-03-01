@@ -24,9 +24,9 @@ func MakeSubmissionHandler(server *server.Server) *SubmissionHandler {
 // @Tags          Submission Endpoints
 // @Accept        json
 // @Produce       json
-// @Param         page		query	uint	true	"Page of submissions"	minimum(1)
-// @Param         user_id	query	uint	false	"User ID"
-// @Param         language	query	string	false	"Type of language"
+// @Param         page		query	uint						true	"Page of submissions"	minimum(1)
+// @Param         user_id	query	uint						false	"User ID"
+// @Param         language	query	string						false	"Type of language"
 // @Success       200	{array}		response.SubmissionResponse
 // @Failure       400	{object}	echo.HTTPError
 // @Failure       500	{object}	echo.HTTPError
@@ -85,7 +85,7 @@ func (h *SubmissionHandler) PostSubmission(c echo.Context) error {
 // @Tags         Submission Endpoints
 // @Accept       json
 // @Produce      json
-// @Param        id	path	uint					true	"Submission ID"
+// @Param        id			path	uint						true	"Submission ID"
 // @Success      200	{object}	response.SubmissionResponse
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError

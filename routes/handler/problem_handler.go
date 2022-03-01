@@ -24,7 +24,7 @@ func MakeProblemHandler(server *server.Server) *ProblemHandler {
 // @Tags         Problem Endpoints
 // @Accept       json
 // @Produce      json
-// @Param        page	query	uint	true	"Page of problems"	minimum(1)
+// @Param        page		query	uint					true	"Page of problems"	minimum(1)
 // @Success      200	{array}		response.ProblemResponse
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
@@ -75,7 +75,7 @@ func (h *ProblemHandler) PostProblem(c echo.Context) error {
 // @Tags         Problem Endpoints
 // @Accept       json
 // @Produce      json
-// @Param        id		path	uint					true	"Problem ID"
+// @Param        id			path	uint					true	"Problem ID"
 // @Success      200	{object}	response.ProblemResponse
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
@@ -125,7 +125,7 @@ func (h *ProblemHandler) PutProblem(c echo.Context) error {
 // @Tags         Problem Endpoints
 // @Accept       json
 // @Produce      json
-// @Param        id		path	uint					true	"Problem ID"
+// @Param        id			path	uint					true	"Problem ID"
 // @Success      204	{object}	nil
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError

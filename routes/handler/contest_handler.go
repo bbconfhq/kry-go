@@ -27,7 +27,7 @@ func MakeContestHandler(server *server.Server) *ContestHandler {
 // @Tags         Contest Endpoints
 // @Accept       json
 // @Produce      json
-// @Param        page	query	uint	true	"Page of contests"	minimum(1)
+// @Param        page		query	uint					true	"Page of contests"	minimum(1)
 // @Success      200	{array}		response.ContestResponse
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
@@ -78,7 +78,7 @@ func (h *ContestHandler) PostContest(c echo.Context) error {
 // @Tags         Contest Endpoints
 // @Accept       json
 // @Produce      json
-// @Param        id		path	uint					true	"Contest ID"
+// @Param        id			path	uint					true	"Contest ID"
 // @Success      200	{object}	response.ContestResponse
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
@@ -128,7 +128,7 @@ func (h *ContestHandler) PutContest(c echo.Context) error {
 // @Tags         Contest Endpoints
 // @Accept       json
 // @Produce      json
-// @Param        id		path	uint					true	"Contest ID"
+// @Param        id			path	uint					true	"Contest ID"
 // @Success      204	{object}	nil
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError

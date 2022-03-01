@@ -76,7 +76,7 @@ func (h *TagHandler) PostTag(c echo.Context) error {
 // @Tags         Tag Endpoints
 // @Accept       json
 // @Produce      json
-// @Param        id	path	uint					true	"Tag ID"
+// @Param        id		path	uint				true	"Tag ID"
 // @Success      200	{object}	response.TagResponse
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
@@ -101,7 +101,7 @@ func (h *TagHandler) GetTag(c echo.Context) error {
 // @Tags         Tag Endpoints
 // @Accept       json
 // @Produce      json
-// @Param        problem	body	request.TagRequest	true	"Necessary tag information"
+// @Param        tag	body	request.TagRequest	true	"Necessary tag information"
 // @Success      201	{object}	nil
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
@@ -116,7 +116,7 @@ func (h *TagHandler) PutTag(c echo.Context) error {
 // @Tags         Tag Endpoints
 // @Accept       json
 // @Produce      json
-// @Param        id	path	uint					true	"Tag ID"
+// @Param        id		path	uint				true	"Tag ID"
 // @Success      204	{object}	nil
 // @Failure      400	{object}	echo.HTTPError
 // @Failure      500	{object}	echo.HTTPError
