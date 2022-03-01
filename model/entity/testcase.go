@@ -24,4 +24,5 @@ type Testcase struct {
 	Input     string `gorm:"type:text;not null"`
 	Output    string `gorm:"type:text;not null"`
 	ProblemID uint
+	Problem   Problem
 }
