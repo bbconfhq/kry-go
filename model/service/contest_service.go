@@ -12,7 +12,7 @@ type ContestService struct {
 	DB *gorm.DB
 }
 
-func (s *ContestService) SelectContestsAt(offset int, limit int) ([]response.ContestResponse, error) {
+func (s *ContestService) SelectContestsAt(offset int, limit int) (*[]response.ContestResponse, error) {
 	var contests []entity.Contest
 	var contestsResponse []response.ContestResponse
 
@@ -27,7 +27,7 @@ func (s *ContestService) SelectContestsAt(offset int, limit int) ([]response.Con
 		Find(&contests)
 
 	if result.Error != nil {
-		return contestsResponse, result.Error
+		return &contestsResponse, result.Error
 	}
 
 	for _, e := range contests {
@@ -50,7 +50,7 @@ func (s *ContestService) SelectContestsAt(offset int, limit int) ([]response.Con
 		)
 	}
 
-	return contestsResponse, nil
+	return &contestsResponse, nil
 }
 
 func (s *ContestService) CreateContest(r *request.ContestRequest) error {
@@ -75,7 +75,7 @@ func (s *ContestService) CreateContest(r *request.ContestRequest) error {
 	return nil
 }
 
-func (s *ContestService) SelectContest(id int) (response.ContestResponse, error) {
+func (s *ContestService) SelectContest(id int) (*response.ContestResponse, error) {
 	var contest entity.Contest
 	var contestResponse response.ContestResponse
 
@@ -89,7 +89,7 @@ func (s *ContestService) SelectContest(id int) (response.ContestResponse, error)
 		Find(&contest)
 
 	if result.Error != nil {
-		return contestResponse, result.Error
+		return &contestResponse, result.Error
 	}
 
 	var problemIds []uint
@@ -106,7 +106,7 @@ func (s *ContestService) SelectContest(id int) (response.ContestResponse, error)
 		EndedAt:    contest.EndedAt,
 	}
 
-	return contestResponse, nil
+	return &contestResponse, nil
 }
 
 func (s *ContestService) UpdateContest(r *request.ContestRequest) error {

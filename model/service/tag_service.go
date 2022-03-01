@@ -12,7 +12,7 @@ type TagService struct {
 	DB *gorm.DB
 }
 
-func (s *TagService) SelectTagsAt(offset int, limit int) ([]response.TagResponse, error) {
+func (s *TagService) SelectTagsAt(offset int, limit int) (*[]response.TagResponse, error) {
 	var tags []entity.Tag
 	var tagsResponse []response.TagResponse
 
@@ -23,7 +23,7 @@ func (s *TagService) SelectTagsAt(offset int, limit int) ([]response.TagResponse
 		Find(&tags)
 
 	if result.Error != nil {
-		return tagsResponse, result.Error
+		return &tagsResponse, result.Error
 	}
 
 	for _, e := range tags {
@@ -33,7 +33,7 @@ func (s *TagService) SelectTagsAt(offset int, limit int) ([]response.TagResponse
 		})
 	}
 
-	return tagsResponse, nil
+	return &tagsResponse, nil
 }
 
 func (s *TagService) CreateTag(r *request.TagRequest) error {
@@ -49,7 +49,7 @@ func (s *TagService) CreateTag(r *request.TagRequest) error {
 	return nil
 }
 
-func (s *TagService) SelectTag(id int) (response.TagResponse, error) {
+func (s *TagService) SelectTag(id int) (*response.TagResponse, error) {
 	var tag entity.Tag
 	var tagResponse response.TagResponse
 
@@ -59,7 +59,7 @@ func (s *TagService) SelectTag(id int) (response.TagResponse, error) {
 		Find(&tag)
 
 	if result.Error != nil {
-		return tagResponse, result.Error
+		return &tagResponse, result.Error
 	}
 
 	tagResponse = response.TagResponse{
@@ -67,5 +67,5 @@ func (s *TagService) SelectTag(id int) (response.TagResponse, error) {
 		Name: tag.Name,
 	}
 
-	return tagResponse, nil
+	return &tagResponse, nil
 }

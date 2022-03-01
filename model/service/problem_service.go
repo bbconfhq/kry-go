@@ -12,7 +12,7 @@ type ProblemService struct {
 	DB *gorm.DB
 }
 
-func (s *ProblemService) SelectProblemsAt(offset int, limit int) ([]response.ProblemResponse, error) {
+func (s *ProblemService) SelectProblemsAt(offset int, limit int) (*[]response.ProblemResponse, error) {
 	var problems []entity.Problem
 	var problemsResponse []response.ProblemResponse
 
@@ -27,7 +27,7 @@ func (s *ProblemService) SelectProblemsAt(offset int, limit int) ([]response.Pro
 		Find(&problems)
 
 	if result.Error != nil {
-		return problemsResponse, result.Error
+		return &problemsResponse, result.Error
 	}
 
 	for _, e := range problems {
@@ -55,7 +55,7 @@ func (s *ProblemService) SelectProblemsAt(offset int, limit int) ([]response.Pro
 		)
 	}
 
-	return problemsResponse, nil
+	return &problemsResponse, nil
 }
 
 func (s *ProblemService) CreateProblem(r *request.ProblemRequest) error {
@@ -82,7 +82,7 @@ func (s *ProblemService) CreateProblem(r *request.ProblemRequest) error {
 	return nil
 }
 
-func (s *ProblemService) SelectProblem(id int) (response.ProblemResponse, error) {
+func (s *ProblemService) SelectProblem(id int) (*response.ProblemResponse, error) {
 	var problem entity.Problem
 	var problemResponse response.ProblemResponse
 
@@ -96,7 +96,7 @@ func (s *ProblemService) SelectProblem(id int) (response.ProblemResponse, error)
 		Find(&problem)
 
 	if result.Error != nil {
-		return problemResponse, result.Error
+		return &problemResponse, result.Error
 	}
 
 	var tags []string
@@ -118,7 +118,7 @@ func (s *ProblemService) SelectProblem(id int) (response.ProblemResponse, error)
 		Tags:        tags,
 	}
 
-	return problemResponse, nil
+	return &problemResponse, nil
 }
 
 func (s *ProblemService) UpdateProblem(r *request.ProblemRequest) error {

@@ -12,7 +12,7 @@ type SubmissionService struct {
 	DB *gorm.DB
 }
 
-func (s *SubmissionService) SelectSubmissionsByFilter(offset int, id int, language string, limit int) ([]response.SubmissionResponse, error) {
+func (s *SubmissionService) SelectSubmissionsByFilter(offset int, id int, language string, limit int) (*[]response.SubmissionResponse, error) {
 	var submissions []entity.Submission
 	var submissionsResponse []response.SubmissionResponse
 
@@ -34,7 +34,7 @@ func (s *SubmissionService) SelectSubmissionsByFilter(offset int, id int, langua
 		Find(&submissions)
 
 	if result.Error != nil {
-		return submissionsResponse, result.Error
+		return &submissionsResponse, result.Error
 	}
 
 	for _, e := range submissions {
@@ -47,7 +47,7 @@ func (s *SubmissionService) SelectSubmissionsByFilter(offset int, id int, langua
 		})
 	}
 
-	return submissionsResponse, nil
+	return &submissionsResponse, nil
 }
 
 func (s *SubmissionService) CreateSubmission(r *request.SubmissionRequest) error {
@@ -67,7 +67,7 @@ func (s *SubmissionService) CreateSubmission(r *request.SubmissionRequest) error
 	return nil
 }
 
-func (s *SubmissionService) SelectSubmission(id int) (response.SubmissionResponse, error) {
+func (s *SubmissionService) SelectSubmission(id int) (*response.SubmissionResponse, error) {
 	var submission entity.Submission
 	var submissionResponse response.SubmissionResponse
 
@@ -77,7 +77,7 @@ func (s *SubmissionService) SelectSubmission(id int) (response.SubmissionRespons
 		Find(&submission)
 
 	if result.Error != nil {
-		return submissionResponse, result.Error
+		return &submissionResponse, result.Error
 	}
 
 	submissionResponse = response.SubmissionResponse{
@@ -88,5 +88,5 @@ func (s *SubmissionService) SelectSubmission(id int) (response.SubmissionRespons
 		ProblemID: submission.ProblemID,
 	}
 
-	return submissionResponse, nil
+	return &submissionResponse, nil
 }
