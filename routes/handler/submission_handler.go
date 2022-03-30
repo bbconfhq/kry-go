@@ -15,7 +15,10 @@ type SubmissionHandler struct {
 }
 
 func MakeSubmissionHandler(server *base.Server) *SubmissionHandler {
-	return &SubmissionHandler{server: server}
+	return &SubmissionHandler{
+		server:  server,
+		service: &service.SubmissionService{DB: server.DB.Db},
+	}
 }
 
 // GetSubmissions godoc

@@ -15,7 +15,10 @@ type ProblemHandler struct {
 }
 
 func MakeProblemHandler(server *base.Server) *ProblemHandler {
-	return &ProblemHandler{server: server}
+	return &ProblemHandler{
+		server:  server,
+		service: &service.ProblemService{DB: server.DB.Db},
+	}
 }
 
 // GetProblems   godoc

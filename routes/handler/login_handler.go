@@ -20,7 +20,10 @@ type LoginHandler struct {
 }
 
 func MakeLoginHandler(server *base.Server) *LoginHandler {
-	return &LoginHandler{server: server}
+	return &LoginHandler{
+		server:  server,
+		service: &service.LoginService{DB: server.DB.Db},
+	}
 }
 
 func (loginHandler *LoginHandler) LoginUser(c echo.Context) error {

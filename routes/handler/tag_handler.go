@@ -15,7 +15,10 @@ type TagHandler struct {
 }
 
 func MakeTagHandler(server *base.Server) *TagHandler {
-	return &TagHandler{server: server}
+	return &TagHandler{
+		server:  server,
+		service: &service.TagService{DB: server.DB.Db},
+	}
 }
 
 // GetTags godoc

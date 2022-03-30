@@ -14,7 +14,10 @@ type TestcaseHandler struct {
 }
 
 func MakeTestcaseHandler(server *base.Server) *TestcaseHandler {
-	return &TestcaseHandler{server: server}
+	return &TestcaseHandler{
+		server:  server,
+		service: &service.TestcaseService{DB: server.DB.Db},
+	}
 }
 
 // GetTestcases   godoc

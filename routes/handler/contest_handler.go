@@ -17,7 +17,7 @@ type ContestHandler struct {
 func MakeContestHandler(server *base.Server) *ContestHandler {
 	return &ContestHandler{
 		server:  server,
-		service: &service.ContestService{DB: server.DB},
+		service: &service.ContestService{DB: server.DB.Db},
 	}
 }
 

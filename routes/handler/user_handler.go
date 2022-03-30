@@ -13,7 +13,10 @@ type UserHandler struct {
 }
 
 func MakeUserHandler(server *base.Server) *UserHandler {
-	return &UserHandler{server: server}
+	return &UserHandler{
+		server:  server,
+		service: &service.UserService{DB: server.DB.Db},
+	}
 }
 
 func (h *UserHandler) GetUsers(c echo.Context) error {
