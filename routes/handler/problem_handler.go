@@ -2,19 +2,19 @@ package handler
 
 import (
 	"github.com/labstack/echo/v4"
+	"kry-go/base"
 	"kry-go/model/request"
 	"kry-go/model/service"
-	"kry-go/server"
 	"net/http"
 	"strconv"
 )
 
 type ProblemHandler struct {
-	server  *server.Server
+	server  *base.Server
 	service *service.ProblemService
 }
 
-func MakeProblemHandler(server *server.Server) *ProblemHandler {
+func MakeProblemHandler(server *base.Server) *ProblemHandler {
 	return &ProblemHandler{server: server}
 }
 

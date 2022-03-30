@@ -5,14 +5,14 @@ import (
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4/middleware"
 	echoSwagger "github.com/swaggo/echo-swagger"
+	"kry-go/base"
 	_ "kry-go/docs"
 	"kry-go/routes/handler"
-	"kry-go/server"
 	"os"
 	"strings"
 )
 
-func InitRouter(server *server.Server) {
+func InitRouter(server *base.Server) {
 	contestHandler := handler.MakeContestHandler(server)
 	problemHandler := handler.MakeProblemHandler(server)
 	submissionHandler := handler.MakeSubmissionHandler(server)
@@ -49,12 +49,13 @@ func InitRouter(server *server.Server) {
 	g.PUT("/problem/:problemId", problemHandler.PutProblem)
 	g.DELETE("/problem/:problemId", problemHandler.DeleteProblem)
 
+	// TODO: Make decision how to handle submissions
 	// SubmissionHandler
 	g.GET("/submission", submissionHandler.GetSubmissions)
 	g.POST("/submission/:submissionId", submissionHandler.PostSubmission)
 	g.GET("/submission/:submissionId", submissionHandler.GetSubmission)
-	g.PUT("/submission/:submissionId", submissionHandler.PutSubmission)
-	g.DELETE("/submission/:submissionId", submissionHandler.DeleteSubmission)
+	//g.PUT("/submission/:submissionId", submissionHandler.PutSubmission)
+	//g.DELETE("/submission/:submissionId", submissionHandler.DeleteSubmission)
 
 	// TagHandler
 	g.GET("/tag", tagHandler.GetTags)
@@ -63,6 +64,7 @@ func InitRouter(server *server.Server) {
 	g.PUT("/tag/:tagId", tagHandler.PutTag)
 	g.DELETE("/tag/:tagId", tagHandler.DeleteTag)
 
+	// TODO: Make decision how to manage testcases
 	// TestcaseHandler
 	g.GET("/testcase", testcaseHandler.GetTestcases)
 	g.POST("/testcase", testcaseHandler.PostTestcase)

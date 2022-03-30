@@ -2,17 +2,17 @@ package handler
 
 import (
 	"github.com/labstack/echo/v4"
+	"kry-go/base"
 	"kry-go/model/service"
-	"kry-go/server"
 	"net/http"
 )
 
 type UserHandler struct {
-	server  *server.Server
+	server  *base.Server
 	service *service.UserService
 }
 
-func MakeUserHandler(server *server.Server) *UserHandler {
+func MakeUserHandler(server *base.Server) *UserHandler {
 	return &UserHandler{server: server}
 }
 

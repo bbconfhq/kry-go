@@ -2,18 +2,18 @@ package handler
 
 import (
 	"github.com/labstack/echo/v4"
+	"kry-go/base"
 	"kry-go/model/service"
-	"kry-go/server"
 	"net/http"
 	"strconv"
 )
 
 type TestcaseHandler struct {
-	server  *server.Server
+	server  *base.Server
 	service *service.TestcaseService
 }
 
-func MakeTestcaseHandler(server *server.Server) *TestcaseHandler {
+func MakeTestcaseHandler(server *base.Server) *TestcaseHandler {
 	return &TestcaseHandler{server: server}
 }
 

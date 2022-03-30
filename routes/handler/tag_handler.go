@@ -2,19 +2,19 @@ package handler
 
 import (
 	"github.com/labstack/echo/v4"
+	"kry-go/base"
 	"kry-go/model/request"
 	"kry-go/model/service"
-	"kry-go/server"
 	"net/http"
 	"strconv"
 )
 
 type TagHandler struct {
-	server  *server.Server
+	server  *base.Server
 	service *service.TagService
 }
 
-func MakeTagHandler(server *server.Server) *TagHandler {
+func MakeTagHandler(server *base.Server) *TagHandler {
 	return &TagHandler{server: server}
 }
 

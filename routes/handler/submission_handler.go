@@ -2,19 +2,19 @@ package handler
 
 import (
 	"github.com/labstack/echo/v4"
+	"kry-go/base"
 	"kry-go/model/request"
 	"kry-go/model/service"
-	"kry-go/server"
 	"net/http"
 	"strconv"
 )
 
 type SubmissionHandler struct {
-	server  *server.Server
+	server  *base.Server
 	service *service.SubmissionService
 }
 
-func MakeSubmissionHandler(server *server.Server) *SubmissionHandler {
+func MakeSubmissionHandler(server *base.Server) *SubmissionHandler {
 	return &SubmissionHandler{server: server}
 }
 

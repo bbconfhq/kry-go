@@ -1,10 +1,8 @@
 package main
 
 import (
-	"kry-go/config"
-	"kry-go/config/db"
+	"kry-go/base"
 	"kry-go/routes"
-	"kry-go/server"
 	"log"
 )
 
@@ -23,11 +21,13 @@ import (
 // @host
 // @BasePath
 func main() {
-	cfg := config.Load()
-	app := server.Init(cfg)
+	cfg := base.Config{}
+	cfg.Load()
 
-	routes.InitRouter(app)
-	db.MigrateDatabase(app.DB)
+	app := base.Server{}
+	app.Init(&cfg)
+
+	routes.InitRouter(&app)
 
 	if err := app.Run(":8888"); err != nil {
 		log.Fatal(err)

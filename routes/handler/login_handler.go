@@ -6,20 +6,20 @@ import (
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
+	"kry-go/base"
 	"kry-go/model/entity"
 	"kry-go/model/service"
-	"kry-go/server"
 	"kry-go/utils"
 	"log"
 	"net/http"
 )
 
 type LoginHandler struct {
-	server  *server.Server
+	server  *base.Server
 	service *service.LoginService
 }
 
-func MakeLoginHandler(server *server.Server) *LoginHandler {
+func MakeLoginHandler(server *base.Server) *LoginHandler {
 	return &LoginHandler{server: server}
 }
 

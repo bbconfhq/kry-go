@@ -2,19 +2,19 @@ package handler
 
 import (
 	"github.com/labstack/echo/v4"
+	"kry-go/base"
 	request "kry-go/model/request"
 	"kry-go/model/service"
-	"kry-go/server"
 	"net/http"
 	"strconv"
 )
 
 type ContestHandler struct {
-	server  *server.Server
+	server  *base.Server
 	service *service.ContestService
 }
 
-func MakeContestHandler(server *server.Server) *ContestHandler {
+func MakeContestHandler(server *base.Server) *ContestHandler {
 	return &ContestHandler{
 		server:  server,
 		service: &service.ContestService{DB: server.DB},
